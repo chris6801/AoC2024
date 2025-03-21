@@ -1,0 +1,28 @@
+from collections import defaultdict
+
+with open('four.txt') as f:
+    data = f.readlines()
+    data = [item.strip() for item in data]
+    
+data_map = defaultdict()
+    
+for i, line in enumerate(data):
+    for j, char in enumerate(line):
+        data_map[(j, i)] = char
+
+vecs = {(1,1), (-1,1)}
+
+sum = 0
+
+for k, v in data_map.items():
+    #print(k, v)
+    if v == 'A':
+        success = 0
+        for v in vecs:
+            if (0 <= k[0] + v[0] <= 139) and (0 <= k[1] + v[1] <= 139) and (0 <= k[0] + -v[0] <= 139) and (0 <= k[1] + -v[1] <= 139):
+                if (data_map[(k[0]+v[0], k[1]+v[1])] == 'M' and data_map[(k[0] + -v[0], k[1] + -v[1])] == 'S') or (data_map[(k[0]+v[0], k[1]+v[1])] == 'S' and data_map[(k[0] + -v[0], k[1] + -v[1])] == 'M'):
+                    success += 1
+        if success == 2:
+            sum += 1
+
+print(sum)
