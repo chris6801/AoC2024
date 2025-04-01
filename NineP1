@@ -1,0 +1,31 @@
+
+
+with open('nine.txt') as f:
+    new = []
+    id = 0
+    data = f.read()
+    data = list(map(int, data.strip()))
+    for i in range(0, len(data), 2):
+        #print('i: ', i)
+        for j in range(data[i]):
+            new.append(id)
+        id += 1
+        if i < len(data) - 1:
+            for k in range(data[i+1]):
+                new.append('.')
+    
+data = new
+#print(data)
+total = 0
+
+for i in range(len(data)):
+    if data[i] == '.':
+        for j in range(len(data) - 1, i, -1):
+            if data[j] != '.':
+                data[i], data[j] = data[j], data[i]
+                total += data[i] * i
+                break
+    else:
+        total += data[i] * i
+        
+print(total)
